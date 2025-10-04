@@ -46,26 +46,48 @@ mysql -u root -p QuanLyXeBuyt < backend/database/init.sql
 ```
 
 ### Bước 4: Cấu hình môi trường
+
+**🔧 Tạo file .env từ template:**
 ```bash
-# 1. Tạo file .env cho backend (trong thư mục backend/)
+# 1. Copy file .env.example thành .env
+# Trong thư mục gốc dự án:
+cp .env.example .env
+
+# 2. Copy cho backend:
+cp .env.example backend/.env
+
+# 3. Copy cho frontend (nếu cần):
+cp .env.example frontend/.env
+```
+
+**⚙️ Cấu hình database trong file .env:**
+```env
+# === CẤU HÌNH DATABASE ===
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=QuanLyXeBuyt
 DB_USER=root
-DB_PASSWORD=your_mysql_password
+DB_PASSWORD=your_mysql_password_here
 
-JWT_SECRET=your-super-secret-key-here
-JWT_REFRESH_SECRET=your-refresh-secret-key-here
+# === CẤU HÌNH JWT ===
+JWT_SECRET=your-super-secret-key-here-change-this
+JWT_REFRESH_SECRET=your-refresh-secret-key-here-change-this
 JWT_EXPIRES_IN=1h
 JWT_REFRESH_EXPIRES_IN=7d
 
+# === CẤU HÌNH SERVER ===
 PORT=3000
 NODE_ENV=development
 
-# 2. Tạo file .env cho frontend (trong thư mục frontend/)
+# === CẤU HÌNH FRONTEND ===
 VITE_API_URL=http://localhost:3000/api
 VITE_SOCKET_URL=http://localhost:3000
 ```
+
+**🔒 Lưu ý quan trọng:**
+- File `.env` đã được thêm vào `.gitignore` nên sẽ KHÔNG được push lên GitHub
+- Mỗi developer có thể có cấu hình `.env` khác nhau
+- Chỉ file `.env.example` được push lên GitHub làm template
 
 ### Bước 5: Chạy hệ thống
 ```bash

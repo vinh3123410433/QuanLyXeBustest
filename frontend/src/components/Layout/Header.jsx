@@ -12,11 +12,11 @@ const Header = ({ onMenuClick }) => {
     try {
       await authAPI.logout()
       logout()
-      toast.success('Logged out successfully')
+      toast.success('Đăng xuất thành công!')
     } catch (error) {
       // Even if logout fails, clear local state
       logout()
-      toast.success('Logged out successfully')
+      toast.success('Đăng xuất thành công!')
     }
   }
 
@@ -45,10 +45,10 @@ const Header = ({ onMenuClick }) => {
             
             <div className="ml-4 lg:ml-0">
               <h1 className="text-2xl font-semibold text-gray-900">
-                Welcome back, {user?.firstName}!
+                Xin chào, {user?.firstName || 'Người dùng'}!
               </h1>
               <p className="text-sm text-gray-500">
-                {new Date().toLocaleDateString('en-US', {
+                {new Date().toLocaleDateString('vi-VN', {
                   weekday: 'long',
                   year: 'numeric',
                   month: 'long',
@@ -104,7 +104,7 @@ const Header = ({ onMenuClick }) => {
                     onClick={() => setShowUserMenu(false)}
                   >
                     <User className="mr-3 h-4 w-4" />
-                    Profile
+                    Hồ sơ cá nhân
                   </a>
                   
                   <button
@@ -112,7 +112,7 @@ const Header = ({ onMenuClick }) => {
                     className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     <LogOut className="mr-3 h-4 w-4" />
-                    Sign out
+                    Đăng xuất
                   </button>
                 </div>
               )}
