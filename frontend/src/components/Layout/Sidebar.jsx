@@ -30,13 +30,13 @@ const Sidebar = ({ isOpen, onClose }) => {
       name: 'Quản lý xe buýt',
       href: '/buses',
       icon: Bus,
-      roles: ['admin', 'dispatch', 'driver']
+      roles: ['admin', 'dispatch'] // Chỉ admin và dispatch mới được quản lý xe
     },
     {
       name: 'Tuyến đường',
       href: '/routes',
       icon: Route,
-      roles: ['admin', 'dispatch', 'driver', 'parent']
+      roles: ['admin', 'dispatch'] // Chỉ admin và dispatch mới được quản lý tuyến
     },
     {
       name: 'Học sinh',
@@ -45,13 +45,13 @@ const Sidebar = ({ isOpen, onClose }) => {
       roles: ['admin', 'dispatch', 'parent']
     },
     {
-      name: 'Theo dõi GPS',
+      name: user?.role === 'driver' ? 'Điều khiển xe buýt' : 'Theo dõi GPS',
       href: '/tracking',
       icon: MapPin,
       roles: ['admin', 'dispatch', 'driver', 'parent']
     },
     {
-      name: 'Lịch trình',
+      name: user?.role === 'driver' ? 'Lịch trình của tôi' : 'Lịch trình',
       href: '/schedule',
       icon: Calendar,
       roles: ['admin', 'dispatch', 'driver', 'parent']
@@ -60,19 +60,27 @@ const Sidebar = ({ isOpen, onClose }) => {
       name: 'Người dùng',
       href: '/users',
       icon: Users,
-      roles: ['admin']
+      roles: ['admin'] // Chỉ admin
     },
     {
       name: 'Thông báo',
       href: '/notifications',
       icon: Bell,
-      roles: ['admin', 'dispatch', 'driver', 'parent']
+      roles: ['admin', 'dispatch', 'parent'] // Tài xế không quản lý thông báo
     }
   ]
 
-  const filteredNavigation = navigation.filter(item => 
-    hasAnyRole(item.roles)
-  )
+  // Restrict driver to only allowed pages
+  let filteredNavigation = [];
+  if (user?.role === 'driver') {
+    filteredNavigation = navigation.filter(item => [
+      '/dashboard',
+      '/tracking',
+      '/schedule'
+    ].includes(item.href));
+  } else {
+    filteredNavigation = navigation.filter(item => hasAnyRole(item.roles));
+  }
 
   return (
     <>

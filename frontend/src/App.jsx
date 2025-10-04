@@ -29,8 +29,15 @@ import TrackingPage from './pages/Tracking/TrackingPage'
 // Schedule
 import SchedulePage from './pages/Schedule/SchedulePage'
 
+// Driver Schedule
+import DriverSchedulePage from './pages/Driver/DriverSchedulePage'
+
 // Notifications
 import NotificationsPage from './pages/Notifications/NotificationsPage'
+
+// User Management
+import UserListPage from './pages/Users/UserListPage'
+import UserDetailsPage from './pages/Users/UserDetailsPage'
 
 // Profile
 import ProfilePage from './pages/Profile/ProfilePage'
@@ -80,13 +87,41 @@ function App() {
           {/* Dashboard */}
           <Route path="dashboard" element={<DashboardPage />} />
           
-          {/* Bus Management */}
-          <Route path="buses" element={<BusListPage />} />
-          <Route path="buses/:id" element={<BusDetailsPage />} />
+          {/* Bus Management - Admin and Dispatch only */}
+          <Route 
+            path="buses" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dispatch']}>
+                <BusListPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="buses/:id" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dispatch']}>
+                <BusDetailsPage />
+              </ProtectedRoute>
+            } 
+          />
           
-          {/* Route Management */}
-          <Route path="routes" element={<RouteListPage />} />
-          <Route path="routes/:id" element={<RouteDetailsPage />} />
+          {/* Route Management - Admin and Dispatch only */}
+          <Route 
+            path="routes" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dispatch']}>
+                <RouteListPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="routes/:id" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dispatch']}>
+                <RouteDetailsPage />
+              </ProtectedRoute>
+            } 
+          />
           
           {/* Student Management - Admin and Parents only */}
           <Route
@@ -109,11 +144,45 @@ function App() {
           {/* Tracking */}
           <Route path="tracking" element={<TrackingPage />} />
           
-          {/* Schedule */}
-          <Route path="schedule" element={<SchedulePage />} />
+          {/* Schedule - Different for drivers */}
+          <Route 
+            path="schedule" 
+            element={
+              user?.role === 'driver' ? <DriverSchedulePage /> : (
+                <ProtectedRoute allowedRoles={['admin', 'dispatch', 'parent']}>
+                  <SchedulePage />
+                </ProtectedRoute>
+              )
+            } 
+          />
           
-          {/* Notifications */}
-          <Route path="notifications" element={<NotificationsPage />} />
+          {/* Notifications - Admin, Dispatch and Parents only */}
+          <Route 
+            path="notifications" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dispatch', 'parent']}>
+                <NotificationsPage />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* User Management - Admin only */}
+          <Route 
+            path="users" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <UserListPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="users/:id" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <UserDetailsPage />
+              </ProtectedRoute>
+            } 
+          />
           
           {/* Profile */}
           <Route path="profile" element={<ProfilePage />} />

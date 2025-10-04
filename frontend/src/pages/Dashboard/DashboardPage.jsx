@@ -170,7 +170,9 @@ const DashboardPage = () => {
                 className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <MapPin className="h-8 w-8 text-primary-600 mb-2" />
-                <span className="text-sm font-medium text-gray-900">Track Buses</span>
+                <span className="text-sm font-medium text-gray-900">
+                  {user?.role === 'driver' ? 'Điều khiển xe' : 'Theo dõi GPS'}
+                </span>
               </a>
               
               <a
@@ -178,26 +180,52 @@ const DashboardPage = () => {
                 className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <Clock className="h-8 w-8 text-success-600 mb-2" />
-                <span className="text-sm font-medium text-gray-900">View Schedule</span>
-              </a>
-              
-              <a
-                href="/buses"
-                className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <Bus className="h-8 w-8 text-warning-600 mb-2" />
-                <span className="text-sm font-medium text-gray-900">Manage Buses</span>
-              </a>
-              
-              <a
-                href="/notifications"
-                className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <AlertTriangle className="h-8 w-8 text-danger-600 mb-2" />
                 <span className="text-sm font-medium text-gray-900">
-                  Alerts ({stats.alerts})
+                  {user?.role === 'driver' ? 'Lịch trình của tôi' : 'Lịch trình'}
                 </span>
               </a>
+              
+              {(user?.role === 'admin' || user?.role === 'dispatch') && (
+                <a
+                  href="/buses"
+                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <Bus className="h-8 w-8 text-warning-600 mb-2" />
+                  <span className="text-sm font-medium text-gray-900">Quản lý xe</span>
+                </a>
+              )}
+
+              {(user?.role === 'admin' || user?.role === 'dispatch') && (
+                <a
+                  href="/routes"
+                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <RouteIcon className="h-8 w-8 text-purple-600 mb-2" />
+                  <span className="text-sm font-medium text-gray-900">Quản lý tuyến</span>
+                </a>
+              )}
+              
+              {(user?.role === 'admin' || user?.role === 'dispatch' || user?.role === 'parent') && (
+                <a
+                  href="/notifications"
+                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <AlertTriangle className="h-8 w-8 text-danger-600 mb-2" />
+                  <span className="text-sm font-medium text-gray-900">
+                    Thông báo ({stats.alerts})
+                  </span>
+                </a>
+              )}
+
+              {(user?.role === 'admin' || user?.role === 'dispatch' || user?.role === 'parent') && (
+                <a
+                  href="/students"
+                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <Users className="h-8 w-8 text-green-600 mb-2" />
+                  <span className="text-sm font-medium text-gray-900">Học sinh</span>
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -207,12 +235,50 @@ const DashboardPage = () => {
       {user?.role === 'admin' && (
         <div className="card">
           <div className="card-header">
-            <h3 className="text-lg font-medium text-gray-900">System Overview</h3>
+            <h3 className="text-lg font-medium text-gray-900">Tổng quan hệ thống</h3>
           </div>
           <div className="card-body">
-            <p className="text-gray-600">
-              As an administrator, you have full access to all system features including user management, 
-              system configuration, and detailed analytics.
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-green-50 rounded-lg">
+                <p className="text-2xl font-bold text-green-600">98.5%</p>
+                <p className="text-sm text-green-700">Tỷ lệ hoạt động</p>
+              </div>
+              <div className="text-center p-3 bg-blue-50 rounded-lg">
+                <p className="text-2xl font-bold text-blue-600">24/7</p>
+                <p className="text-sm text-blue-700">Giám sát thời gian thực</p>
+              </div>
+              <div className="text-center p-3 bg-purple-50 rounded-lg">
+                <p className="text-2xl font-bold text-purple-600">150+</p>
+                <p className="text-sm text-purple-700">Chuyến/ngày</p>
+              </div>
+            </div>
+            <p className="mt-4 text-gray-600">
+              Với quyền quản trị viên, bạn có thể truy cập đầy đủ tất cả chức năng hệ thống bao gồm 
+              quản lý người dùng, cấu hình hệ thống và phân tích chi tiết.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {user?.role === 'dispatch' && (
+        <div className="card">
+          <div className="card-header">
+            <h3 className="text-lg font-medium text-gray-900">Điều hành vận tải</h3>
+          </div>
+          <div className="card-body">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-3 bg-orange-50 rounded-lg">
+                <p className="text-lg font-semibold text-orange-600">5 xe</p>
+                <p className="text-sm text-orange-700">Đang hoạt động</p>
+              </div>
+              <div className="p-3 bg-red-50 rounded-lg">
+                <p className="text-lg font-semibold text-red-600">2 cảnh báo</p>
+                <p className="text-sm text-red-700">Cần xử lý</p>
+              </div>
+            </div>
+            <p className="mt-4 text-gray-600">
+              Bạn có thể theo dõi và điều phối tất cả các xe buýt, quản lý lịch trình và 
+              xử lý các tình huống khẩn cấp.
             </p>
           </div>
         </div>
@@ -221,13 +287,30 @@ const DashboardPage = () => {
       {user?.role === 'driver' && (
         <div className="card">
           <div className="card-header">
-            <h3 className="text-lg font-medium text-gray-900">Today's Schedule</h3>
+            <h3 className="text-lg font-medium text-gray-900">Lịch trình hôm nay</h3>
           </div>
           <div className="card-body">
-            <p className="text-gray-600">
-              Your next route starts in 30 minutes. Make sure to check your bus inspection 
-              checklist before departure.
-            </p>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div>
+                  <p className="font-medium text-blue-900">Ca sáng - Tuyến A</p>
+                  <p className="text-sm text-blue-700">06:30 - 08:30 | Xe 29A-12345</p>
+                </div>
+                <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">Sắp tới</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium text-gray-900">Ca chiều - Tuyến A</p>
+                  <p className="text-sm text-gray-600">16:00 - 18:00 | Xe 29A-12345</p>
+                </div>
+                <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-sm">Đã lên lịch</span>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-400">
+              <p className="text-sm text-yellow-700">
+                <strong>Lưu ý:</strong> Hãy kiểm tra xe trước khi xuất phát và đảm bảo tuân thủ lịch trình.
+              </p>
+            </div>
           </div>
         </div>
       )}
@@ -235,13 +318,39 @@ const DashboardPage = () => {
       {user?.role === 'parent' && (
         <div className="card">
           <div className="card-header">
-            <h3 className="text-lg font-medium text-gray-900">Your Children</h3>
+            <h3 className="text-lg font-medium text-gray-900">Theo dõi con em</h3>
           </div>
           <div className="card-body">
-            <p className="text-gray-600">
-              Track your children's bus location and receive real-time notifications 
-              about pickup and drop-off times.
-            </p>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div>
+                    <p className="font-medium text-green-900">Nguyễn Minh An</p>
+                    <p className="text-sm text-green-700">Xe 29A-12345 • Tuyến A</p>
+                  </div>
+                </div>
+                <span className="text-sm text-green-600">Đã lên xe</span>
+              </div>
+              
+              <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div>
+                    <p className="font-medium text-blue-900">Nguyễn Minh Hà</p>
+                    <p className="text-sm text-blue-700">Xe 29B-67890 • Tuyến B</p>
+                  </div>
+                </div>
+                <span className="text-sm text-blue-600">Đang di chuyển</span>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-3 bg-blue-50 border-l-4 border-blue-400">
+              <p className="text-sm text-blue-700">
+                Bạn sẽ nhận được thông báo khi con em được đón/trả tại điểm dừng. 
+                Có thể theo dõi vị trí xe buýt real-time.
+              </p>
+            </div>
           </div>
         </div>
       )}
