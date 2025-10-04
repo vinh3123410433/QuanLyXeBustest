@@ -6,9 +6,9 @@ services:
     container_name: bus_mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: bus_management
+      MYSQL_DATABASE: QuanLyXeBuyt
       MYSQL_USER: bususer
-      MYSQL_PASSWORD: buspassword
+      MYSQL_PASSWORD: vinh
     ports:
       - "3306:3306"
     volumes:

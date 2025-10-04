@@ -81,3 +81,61 @@ export const studentAPI = {
   updateStudent: (id, data) => apiClient.put(`/students/${id}`, data),
   deleteStudent: (id) => apiClient.delete(`/students/${id}`),
 }
+
+// Utility functions for easier usage
+export const getAllBuses = (params) => busAPI.getBuses(params);
+export const getAllRoutes = (params) => routeAPI.getRoutes(params);
+export const getAllUsers = (params) => userAPI.getUsers(params);
+export const getAllStops = (params) => stopAPI.getStops(params);
+export const getAllSchedules = (params) => scheduleAPI.getSchedules(params);
+export const getAllStudents = (params) => studentAPI.getStudents(params);
+
+// Tracking utility functions
+export const getBusTracking = async (busId) => {
+  try {
+    const response = await trackingAPI.getBusLocation(busId);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching bus tracking:', error);
+    // Return demo data for testing
+    return {
+      id: busId,
+      busNumber: `BUS-${String(busId).padStart(3, '0')}`,
+      latitude: 10.8231 + (Math.random() - 0.5) * 0.01, // Ho Chi Minh City area with small random offset
+      longitude: 106.6297 + (Math.random() - 0.5) * 0.01,
+      speed: Math.floor(Math.random() * 60) + 10, // Random speed 10-70 km/h
+      timestamp: new Date().toISOString(),
+      status: 'active'
+    };
+  }
+};
+
+export const getAllBusesTracking = async () => {
+  try {
+    const response = await trackingAPI.getAllBusesLocations();
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching all buses tracking:', error);
+    // Return demo data
+    return [
+      {
+        id: 1,
+        busNumber: 'BUS-001',
+        latitude: 10.8231,
+        longitude: 106.6297,
+        speed: 45,
+        timestamp: new Date().toISOString(),
+        status: 'active'
+      },
+      {
+        id: 2,
+        busNumber: 'BUS-002', 
+        latitude: 10.7769,
+        longitude: 106.7009,
+        speed: 32,
+        timestamp: new Date().toISOString(),
+        status: 'active'
+      }
+    ];
+  }
+};

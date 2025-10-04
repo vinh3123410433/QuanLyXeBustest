@@ -21,49 +21,49 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   const navigation = [
     {
-      name: 'Dashboard',
+      name: 'Trang chủ',
       href: '/dashboard',
       icon: LayoutDashboard,
       roles: ['admin', 'dispatch', 'driver', 'parent']
     },
     {
-      name: 'Buses',
+      name: 'Quản lý xe buýt',
       href: '/buses',
       icon: Bus,
       roles: ['admin', 'dispatch', 'driver']
     },
     {
-      name: 'Routes',
+      name: 'Tuyến đường',
       href: '/routes',
       icon: Route,
       roles: ['admin', 'dispatch', 'driver', 'parent']
     },
     {
-      name: 'Students',
+      name: 'Học sinh',
       href: '/students',
       icon: GraduationCap,
       roles: ['admin', 'dispatch', 'parent']
     },
     {
-      name: 'Tracking',
+      name: 'Theo dõi GPS',
       href: '/tracking',
       icon: MapPin,
       roles: ['admin', 'dispatch', 'driver', 'parent']
     },
     {
-      name: 'Schedule',
+      name: 'Lịch trình',
       href: '/schedule',
       icon: Calendar,
       roles: ['admin', 'dispatch', 'driver', 'parent']
     },
     {
-      name: 'Users',
+      name: 'Người dùng',
       href: '/users',
       icon: Users,
       roles: ['admin']
     },
     {
-      name: 'Notifications',
+      name: 'Thông báo',
       href: '/notifications',
       icon: Bell,
       roles: ['admin', 'dispatch', 'driver', 'parent']
@@ -82,7 +82,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className="flex items-center flex-shrink-0 px-4">
             <Bus className="h-8 w-8 text-primary-600" />
             <span className="ml-2 text-xl font-semibold text-gray-900">
-              Bus Manager
+              Quản lý xe buýt
             </span>
           </div>
           
