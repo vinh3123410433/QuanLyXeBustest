@@ -247,7 +247,7 @@ const ProfilePage = () => {
                       type="text"
                       value={editForm.name}
                       onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        
                     />
                   ) : (
                     <p className="text-gray-900">{userProfile.name}</p>

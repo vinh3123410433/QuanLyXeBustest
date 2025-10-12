@@ -23,6 +23,7 @@ const DashboardPage = () => {
     onTimePerformance: 85,
     alerts: 3
   }
+  
 
   const recentActivity = [
     { id: 1, type: 'info', message: 'Bus #101 completed Route A', time: '2 minutes ago' },
@@ -133,7 +134,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
-
+      
       {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activity */}

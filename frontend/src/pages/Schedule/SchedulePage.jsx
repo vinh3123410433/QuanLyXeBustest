@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const SchedulePage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+
   const [selectedRoute, setSelectedRoute] = useState('all');
   const [schedules, setSchedules] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
@@ -459,6 +460,7 @@ const SchedulePage = () => {
                 Hủy
               </button>
               <button
+               
                 onClick={handleCreateSchedule}
                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
               >

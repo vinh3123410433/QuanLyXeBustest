@@ -10,7 +10,7 @@ const useAuthStore = create(
       isAuthenticated: false,
       loading: false,
 
-      // Actions
+      // Actions  
       setAuth: (data) => {
         set({
           user: data.user,
@@ -48,12 +48,12 @@ const useAuthStore = create(
 
       // Getters
       hasRole: (role) => {
-        const { user } = get()
+        const { user } = get() 
         return user?.role === role
       },
 
       hasAnyRole: (roles) => {
-        const { user } = get()
+        const { user } = get() 
         return user && roles.includes(user.role)
       },
     }),
