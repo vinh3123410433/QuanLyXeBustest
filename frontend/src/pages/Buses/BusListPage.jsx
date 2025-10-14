@@ -150,16 +150,16 @@ const BusListPage = () => {
   // Filter buses
   useEffect(() => {
     let filtered = buses;
-    
+
     if (searchTerm) {
-      filtered = filtered.filter(bus => 
+      filtered = filtered.filter(bus =>
         bus.number.toLowerCase().includes(searchTerm.toLowerCase()) ||
         bus.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) ||
         bus.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
         bus.driver.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     if (statusFilter !== 'all') {
       filtered = filtered.filter(bus => bus.status === statusFilter);
     }
@@ -167,7 +167,7 @@ const BusListPage = () => {
     if (routeFilter !== 'all') {
       filtered = filtered.filter(bus => bus.routeCode === routeFilter);
     }
-    
+
     setFilteredBuses(filtered);
   }, [buses, searchTerm, statusFilter, routeFilter]);
 
@@ -223,17 +223,17 @@ const BusListPage = () => {
     const selectedRoute = routes.find(r => r.id.toString() === editingBus.route);
     const selectedDriver = drivers.find(d => d.id.toString() === editingBus.driver);
 
-    setBuses(buses.map(bus => 
-      bus.id === editingBus.id 
-        ? { 
-            ...editingBus, 
-            capacity: parseInt(editingBus.capacity),
-            year: parseInt(editingBus.year),
-            route: selectedRoute?.name || '',
-            routeCode: selectedRoute?.code || '',
-            driver: selectedDriver?.name || '',
-            driverLicense: selectedDriver?.license || ''
-          }
+    setBuses(buses.map(bus =>
+      bus.id === editingBus.id
+        ? {
+          ...editingBus,
+          capacity: parseInt(editingBus.capacity),
+          year: parseInt(editingBus.year),
+          route: selectedRoute?.name || '',
+          routeCode: selectedRoute?.code || '',
+          driver: selectedDriver?.name || '',
+          driverLicense: selectedDriver?.license || ''
+        }
         : bus
     ));
     setEditingBus(null);
@@ -288,7 +288,7 @@ const BusListPage = () => {
           </h1>
           <p className="text-gray-600 mt-1">Quản lý đội xe buýt và thông tin vận hành</p>
         </div>
-        
+
         <button
           onClick={() => setIsCreating(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
@@ -311,7 +311,7 @@ const BusListPage = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center">
             <div className="p-3 bg-green-100 rounded-full">
@@ -325,7 +325,7 @@ const BusListPage = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center">
             <div className="p-3 bg-yellow-100 rounded-full">
@@ -339,7 +339,7 @@ const BusListPage = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center">
             <div className="p-3 bg-purple-100 rounded-full">
@@ -353,7 +353,7 @@ const BusListPage = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center">
             <div className="p-3 bg-indigo-100 rounded-full">
@@ -382,7 +382,7 @@ const BusListPage = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Trạng thái</label>
             <select
@@ -397,7 +397,7 @@ const BusListPage = () => {
               <option value="inactive">Ngưng hoạt động</option>
             </select>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Tuyến</label>
             <select
@@ -413,7 +413,7 @@ const BusListPage = () => {
               ))}
             </select>
           </div>
-          
+
           <div className="flex items-end">
             <button
               onClick={() => {
@@ -446,7 +446,7 @@ const BusListPage = () => {
                   <p className="text-sm text-gray-600">{bus.model} ({bus.year})</p>
                 </div>
               </div>
-              
+
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Sức chứa:</span>
@@ -477,7 +477,7 @@ const BusListPage = () => {
                   <span className="font-medium text-orange-600">{bus.nextMaintenance}</span>
                 </div>
               </div>
-              
+
               <div className="flex space-x-2">
                 <button
                   onClick={() => setEditingBus(bus)}
@@ -496,13 +496,13 @@ const BusListPage = () => {
           </div>
         ))}
       </div>
-      
+
       {filteredBuses.length === 0 && (
         <div className="text-center py-12">
           <span className="text-6xl">🚌</span>
           <p className="text-gray-500 text-lg mt-4">
             {searchTerm || statusFilter !== 'all' || routeFilter !== 'all'
-              ? 'Không tìm thấy xe buýt nào phù hợp' 
+              ? 'Không tìm thấy xe buýt nào phù hợp'
               : 'Chưa có xe buýt nào'
             }
           </p>
@@ -535,7 +535,7 @@ const BusListPage = () => {
                 ✕
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Số hiệu xe *</label>
@@ -544,16 +544,16 @@ const BusListPage = () => {
                   value={editingBus ? editingBus.number : newBus.number}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, number: e.target.value});
+                      setEditingBus({ ...editingBus, number: e.target.value });
                     } else {
-                      setNewBus({...newBus, number: e.target.value});
+                      setNewBus({ ...newBus, number: e.target.value });
                     }
                   }}
                   placeholder="VD: BUS-001"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Biển số xe *</label>
                 <input
@@ -561,16 +561,16 @@ const BusListPage = () => {
                   value={editingBus ? editingBus.licensePlate : newBus.licensePlate}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, licensePlate: e.target.value});
+                      setEditingBus({ ...editingBus, licensePlate: e.target.value });
                     } else {
-                      setNewBus({...newBus, licensePlate: e.target.value});
+                      setNewBus({ ...newBus, licensePlate: e.target.value });
                     }
                   }}
                   placeholder="VD: 51B-123.45"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Model xe</label>
                 <input
@@ -578,16 +578,16 @@ const BusListPage = () => {
                   value={editingBus ? editingBus.model : newBus.model}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, model: e.target.value});
+                      setEditingBus({ ...editingBus, model: e.target.value });
                     } else {
-                      setNewBus({...newBus, model: e.target.value});
+                      setNewBus({ ...newBus, model: e.target.value });
                     }
                   }}
                   placeholder="VD: Thaco TB120S"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Năm sản xuất</label>
                 <input
@@ -595,16 +595,16 @@ const BusListPage = () => {
                   value={editingBus ? editingBus.year : newBus.year}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, year: e.target.value});
+                      setEditingBus({ ...editingBus, year: e.target.value });
                     } else {
-                      setNewBus({...newBus, year: e.target.value});
+                      setNewBus({ ...newBus, year: e.target.value });
                     }
                   }}
                   placeholder="2024"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Sức chứa *</label>
                 <input
@@ -612,25 +612,25 @@ const BusListPage = () => {
                   value={editingBus ? editingBus.capacity : newBus.capacity}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, capacity: e.target.value});
+                      setEditingBus({ ...editingBus, capacity: e.target.value });
                     } else {
-                      setNewBus({...newBus, capacity: e.target.value});
+                      setNewBus({ ...newBus, capacity: e.target.value });
                     }
                   }}
                   placeholder="40"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Loại nhiên liệu</label>
                 <select
                   value={editingBus ? editingBus.fuelType : newBus.fuelType}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, fuelType: e.target.value});
+                      setEditingBus({ ...editingBus, fuelType: e.target.value });
                     } else {
-                      setNewBus({...newBus, fuelType: e.target.value});
+                      setNewBus({ ...newBus, fuelType: e.target.value });
                     }
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -641,16 +641,16 @@ const BusListPage = () => {
                   <option value="electric">Điện</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tuyến</label>
                 <select
                   value={editingBus ? editingBus.route : newBus.route}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, route: e.target.value});
+                      setEditingBus({ ...editingBus, route: e.target.value });
                     } else {
-                      setNewBus({...newBus, route: e.target.value});
+                      setNewBus({ ...newBus, route: e.target.value });
                     }
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -663,16 +663,16 @@ const BusListPage = () => {
                   ))}
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tài xế</label>
                 <select
                   value={editingBus ? editingBus.driver : newBus.driver}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, driver: e.target.value});
+                      setEditingBus({ ...editingBus, driver: e.target.value });
                     } else {
-                      setNewBus({...newBus, driver: e.target.value});
+                      setNewBus({ ...newBus, driver: e.target.value });
                     }
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -685,16 +685,16 @@ const BusListPage = () => {
                   ))}
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
                 <select
                   value={editingBus ? editingBus.status : newBus.status}
                   onChange={(e) => {
                     if (editingBus) {
-                      setEditingBus({...editingBus, status: e.target.value});
+                      setEditingBus({ ...editingBus, status: e.target.value });
                     } else {
-                      setNewBus({...newBus, status: e.target.value});
+                      setNewBus({ ...newBus, status: e.target.value });
                     }
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -706,7 +706,7 @@ const BusListPage = () => {
                 </select>
               </div>
             </div>
-            
+
             <div className="flex space-x-3 mt-6">
               <button
                 onClick={() => {
